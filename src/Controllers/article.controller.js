@@ -1,9 +1,28 @@
 import { matchedData } from "express-validator";
 import { ArticleModel } from "../Models/Article.js";
+import { UserModel } from "../Models/User.js";
+import { TagModel } from "../Models/Tag.js";
 
 export const getAllArticles = async (req,res)=>{
   try {
-    const articles = await ArticleModel.findAll();
+    const articles = await ArticleModel.findAll({
+      attributes: { exclude: ["created_at", "updated_at"] },
+      include: [
+        {
+          model: UserModel,
+          as: "author",
+          attributes: { exclude: ["password", "created_at", "updated_at", "deleted_at"] }
+        },
+        {
+          model: TagModel,
+          as: "tags",
+          attributes: { exclude: ["created_at", "updated_at"] },
+          through: {
+            attributes: []
+          }
+        }
+      ]
+    });
     return res.status(200).json(articles);
   } catch (error) {
     return res.status(500).json({message: "lo sentimos ocurrio un error inesperado"});
@@ -13,7 +32,25 @@ export const getAllArticles = async (req,res)=>{
 export const getArticleById = async (req,res)=>{
   try {
     const { id } = matchedData(req);
-    const article = await ArticleModel.findByPk(id);
+    const article = await ArticleModel.findOne({
+      where: {id},
+       attributes: { exclude: ["created_at", "updated_at"] },
+      include: [
+        {
+          model: UserModel,
+          as: "author",
+          attributes: { exclude: ["password", "created_at", "updated_at", "deleted_at"] }
+        },
+        {
+          model: TagModel,
+          as: "tags",
+          attributes: { exclude: ["created_at", "updated_at"] },
+          through: {
+         attributes: []
+      }
+        }
+      ]
+    });
     return res.status(200).json(article);
   } catch (error) {
     return res.status(500).json({message: "lo sentimos ocurrio un error inesperado"});

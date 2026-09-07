@@ -1,5 +1,5 @@
 import express from "express"
-
+import "./src/Models/index.js"
 import dotenv from "dotenv"
 import { DataBaseUp } from "./src/config/DataBase.js"
 import { UserRoutes } from "./src/Routes/user.routes.js"
