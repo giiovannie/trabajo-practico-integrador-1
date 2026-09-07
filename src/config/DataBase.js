@@ -9,10 +9,11 @@ export const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER,
 
 export const DataBaseUp = async()=>{
     try {
-        await sequelize.sync();
-        await sequelize.authenticate({force: false})
-        console.log("la conecion con la base de datos fue exitosa :)");
+        await sequelize.sync({force: false});
+        await sequelize.authenticate()
+        console.log("la conexion con la base de datos fue exitosa :)");
     } catch (error) {
+        console.log(error);
         console.log("lo sentimos la conexion con la base de datos fallo :c");
     }
 }

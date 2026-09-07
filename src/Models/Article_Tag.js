@@ -1,5 +1,5 @@
-import sequelize from "../config/DataBase.js";
-import datatypes, { Model } from "sequelize";
+import { sequelize } from "../config/DataBase.js";
+import {DataTypes} from "sequelize";
 import { ArticleModel } from "./Article.js";
 import { TagModel } from "./Tag.js";
 
@@ -7,23 +7,25 @@ export const ArticleTagModel = sequelize.define(
     "Article_Tag",
     {
         article_id: {
-            type: datatypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                Model: ArticleModel,
+                model: ArticleModel,
                 key: "id"
             }
         },
         tag_id: {
-            type: datatypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false,
             references:{
-                Model: TagModel,
+                model: TagModel,
                 key: "id",
             }
         }
     },
     {
-
+    createdAt: "created_at",
+    updatedAt: "updated_at",
+    onDelete: "CASCADE"
     }
 )

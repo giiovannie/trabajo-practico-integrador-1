@@ -1,34 +1,34 @@
-import datatypes, { Model } from 'sequelize';
-import sequelize from '../config/DataBase.js';
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../config/DataBase.js';
 import { UserModel } from './User.js';
 
 export const ProfileModel = sequelize.define(
     'Profile', {
         first_name: {
-            type: datatypes.STRING(100),
+            type: DataTypes.STRING(100),
             allowNull: false
         },
         last_name: {
-            type: datatypes.STRING(100),
+            type: DataTypes.STRING(100),
             allowNull: false
         },
         biography: {
-            type: datatypes.TEXT,
+            type: DataTypes.TEXT,
             allowNull: true
         },
         avatar_url:{
-            type: datatypes.STRING(255),
+            type: DataTypes.STRING(255),
             allowNull: true
         },
         birth_date:{
-            type: datatypes.DATEONLY,
+            type: DataTypes.DATEONLY,
             allowNull: true
         },
         user_id:{
-            type: datatypes.INTEGER,
+            type: DataTypes.INTEGER,
             unique: true,
             references: {
-                Model: UserModel,
+                model: UserModel,
                 key: "id"
             }
         }

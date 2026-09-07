@@ -2,15 +2,23 @@ import express from "express"
 
 import dotenv from "dotenv"
 import { DataBaseUp } from "./src/config/DataBase.js"
+import { UserRoutes } from "./src/Routes/user.routes.js"
+import { TagRoutes } from "./src/Routes/tag.routes.js";
+import { ArticleRoutes } from "./src/Routes/articles.routes.js";
+import { ArticleTagRoutes } from "./src/Routes/article_tag.routes.js";
+import { PerfilRouter } from "./src/Routes/profile.routes.js"
 dotenv.config()
 
 
 const PORT = process.env.PORT
 const app = express()
-
-
 app.use(express.json())
 
+app.use("/api", UserRoutes)
+app.use("/api", PerfilRouter)
+app.use("/api", TagRoutes)
+app.use("/api", ArticleRoutes)
+app.use("/api", ArticleTagRoutes)
 
 app.listen(PORT, async()=>{
     try {

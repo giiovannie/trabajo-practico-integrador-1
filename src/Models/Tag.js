@@ -1,4 +1,4 @@
-import sequelize from "../config/DataBase.js";
+import { sequelize } from "../config/DataBase.js";
 import datatypes from "sequelize";
 
 export const TagModel = sequelize.define(
