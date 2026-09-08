@@ -88,3 +88,40 @@ export const deleteArticle = async (req,res)=>{
     return res.status(500).json({message: "lo sentimos ocurrio un error inesperado"});
   }
 };
+
+//pregguntar dsp lo de abajo
+export const getMyArticles = async(req,res)=>{
+  try {
+    const articles = await ArticleModel.findAll({
+      where: {
+        user_id: req.datosUserLog.id,
+        status: "published"
+      }
+    });
+
+    return res.status(200).json(articles);
+  } catch(error) {
+    console.log(error.message);
+    return res.status(500).json({message: "error al obtener los articulos"});
+  }
+};
+
+export const getMyArticleById = async(req,res)=>{
+  try {
+    const { id } = req.params;
+
+    const article = await ArticleModel.findOne({
+      where: {
+        id,
+        user_id: req.datosUserLog.id
+      }
+    });
+
+    if(!article) return res.status(404).json({message: "articulo no encontrado"});
+
+    return res.status(200).json(article);
+  } catch(error) {
+    console.log(error.message);
+    return res.status(500).json({message: "error al obtener el articulo"});
+  }
+};
